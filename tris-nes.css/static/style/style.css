@@ -121,12 +121,12 @@ div.nes-container {
 	color: gray;
 }
 
-.paginaIniziale{
+.paginaIniziale {
 	color: grey;
 	margin-top: 70px;
 	text-decoration: underline;
 }
 
-.nes-table.is-dark::before{
+.nes-table.is-dark::before {
 	position: static;
 }
