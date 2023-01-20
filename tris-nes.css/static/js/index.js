@@ -1,26 +1,67 @@
 //il controllo della vittoria, verrà fatto in base al player che cambierà ogni turno
+let cells = document.querySelectorAll(".button");
 
 function checkWinner(player) {
 	if (grid[0][0] === player && grid[1][1] === player && grid[2][2] === player) {
 		return true;
-	}
-	if (grid[0][2] === player && grid[1][1] === player && grid[2][0] === player) {
+	} else if (
+		grid[0][2] === player &&
+		grid[1][1] === player &&
+		grid[2][0] === player
+	) {
 		return true;
+	} else if (
+		grid[0][0] === player &&
+		grid[1][0] === player &&
+		grid[2][0] === player
+	) {
+		return true;
+	} else if (
+		grid[0][1] === player &&
+		grid[1][1] === player &&
+		grid[2][1] === player
+	) {
+		return true;
+	} else if (
+		grid[0][2] === player &&
+		grid[1][2] === player &&
+		grid[2][2] === player
+	) {
+		return true;
+	} else if (
+		grid[0][0] === player &&
+		grid[0][1] === player &&
+		grid[0][2] === player
+	) {
+		return true;
+	} else if (
+		grid[1][0] === player &&
+		grid[1][1] === player &&
+		grid[1][2] === player
+	) {
+		return true;
+	} else if (
+		grid[2][0] === player &&
+		grid[2][1] === player &&
+		grid[2][2] === player
+	) {
+		return true;
+	} else {
+		return false;
 	}
 }
 
-let cells = document.querySelectorAll(".button");
+let currentPlayer = "X";
+let grid = [
+	[null, null, null],
+	[null, null, null],
+	[null, null, null],
+];
 
 for (let i = 0; i < cells.length; i++) {
 	cells[i].addEventListener("click", function (e) {
 		e.preventDefault();
 
-		let player;
-		let grid = [
-			[null, null, null],
-			[null, null, null],
-			[null, null, null],
-		];
 	});
 }
 
