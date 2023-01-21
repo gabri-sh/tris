@@ -141,13 +141,16 @@ div.nes-container {
 
 .output{
 	margin-top: 80px;
-	color: white;
+	color: transparent;
 	font-size: 50px;
 }
 
-.transition{
+.colorOutput{
+	color: white;
+	opacity: 0.9;
 	transition: all 1s ease-in-out;
 }
+
 
 .nes-icon.close::before{
 	color: #d71d2b;

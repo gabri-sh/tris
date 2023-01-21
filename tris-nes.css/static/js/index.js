@@ -112,9 +112,11 @@ for (let i = 0; i < cells.length; i++) {
 		let win = checkWinner(currentPlayer);
 
 		if (win) {
+			
 			document.querySelector(
 				".output"
 			).innerHTML = `hai vinto player ${currentPlayer}`;
+			document.querySelector(".output").classList.add("colorOutput")
 		}
 
 		//punto 6
