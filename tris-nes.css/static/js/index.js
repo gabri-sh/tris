@@ -72,30 +72,59 @@ let grid = [
 	[null, null, null],
 ];
 
+cellIsOccupied = true;
+let v1, v2;
+
 for (let i = 0; i < cells.length; i++) {
 	cells[i].addEventListener("click", function (e) {
 		e.preventDefault();
 
 		console.log(`valore della i --> ${i}`);
 		console.log(`valore di player --> ${currentPlayer}`);
-		
-		if (currentPlayer === "X") {
-			cells[i].innerHTML = "X"
-		} else {
-			cells[i].innerHTML = "O"
+
+		cellIsOccupied =
+			e.currentTarget.classList.contains("player2") ||
+			e.currentTarget.classList.contains("player1");
+
+		console.log(cellIsOccupied);
+		if (!cellIsOccupied) {
+			// Mettiamo una X o un O a seconda del turno del player
+			// Cambiamo il currentPlayer -> currentPlayer = 2
+
+			v1 = cells[i].dataset.row;
+			v2 = cells[i].dataset.cell;
+
+			if (currentPlayer === "X") {
+				e.currentTarget.classList.toggle("player1");
+				cells[i].classList.add("nes-icon")
+				cells[i].classList.add("close")
+				cells[i].classList.add("is-medium")
+				grid[v1][v2] = "X";
+			} else {
+				e.currentTarget.classList.toggle("player2");
+				cells[i].classList.add("nes-icon")
+				cells[i].classList.add("coin")
+				cells[i].classList.add("is-medium")
+				grid[v1][v2] = "O";
+			}
 		}
-				
-		let win = checkWinner(currentPlayer)
-		
+
+		let win = checkWinner(currentPlayer);
+
+		if (win) {
+			document.querySelector(
+				".output"
+			).innerHTML = `hai vinto player ${currentPlayer}`;
+		}
+
 		//punto 6
 		if (currentPlayer === "X") {
-			currentPlayer = "O"
-		}else{
-			currentPlayer = "X"
+			currentPlayer = "O";
+		} else {
+			currentPlayer = "X";
 		}
 	});
 }
-
 
 /*
 1. Inizializzo grigia di gioco vuota (tutti elementi = null)

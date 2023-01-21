@@ -130,3 +130,34 @@ div.nes-container {
 .nes-table.is-dark::before {
 	position: static;
 }
+
+.player1{
+	text-decoration: none;
+}
+
+.player2{
+	text-decoration: none;
+}
+
+.output{
+	margin-top: 80px;
+	color: white;
+	font-size: 50px;
+}
+
+.transition{
+	transition: all 1s ease-in-out;
+}
+
+.nes-icon.close::before{
+	color: #d71d2b;
+}
+.button.player1.nes-icon.close.is-medium{
+	left: 25%;
+	top: 25%;
+}
+
+.button.player2.nes-icon.coin.is-medium{
+	left: 25%;
+	top: 25%;
+}
