@@ -39,7 +39,7 @@ div.nes-container {
 }
 
 .nes-table.is-dark {
-	background-color: #827a35;
+	background-color: #58542d;
 }
 
 .flex {
@@ -162,4 +162,9 @@ div.nes-container {
 .button.player2.nes-icon.coin.is-medium {
 	left: 25%;
 	top: 25%;
+}
+
+.noClick {
+	pointer-events: none;
+	cursor: default;
 }

@@ -90,7 +90,6 @@ for (let i = 0; i < cells.length; i++) {
 
 		console.log(cellIsOccupied);
 		if (!cellIsOccupied) {
-			
 			count++;
 			v1 = cells[i].dataset.row;
 			v2 = cells[i].dataset.cell;
@@ -117,11 +116,11 @@ for (let i = 0; i < cells.length; i++) {
 				".output"
 			).innerHTML = `hai vinto player ${currentPlayer}`;
 			document.querySelector(".output").classList.add("colorOutput");
-		}
-
-		if (count === 9 && !win) {
+			//come fare per non far più cliccare il link al player
+		} else if (count === 9 && !win) {
 			document.querySelector(".output").innerHTML = `pareggio`;
 			document.querySelector(".output").classList.add("colorOutput");
+			//come fare per non far più cliccare il link al player
 		}
 
 		//punto 6
@@ -132,12 +131,3 @@ for (let i = 0; i < cells.length; i++) {
 		}
 	});
 }
-
-/*
-1. Inizializzo grigia di gioco vuota (tutti elementi = null)
-2. Creo una variabile currentPlayer
-3. Event listener sulle celle della griglia - per associare le celle all'elemento della grid in js usare data attribute oppure id=1,2,3...
-4. Disegnare X o O nella cella cliccata solo se non è già occupata 
-5. Controllare dopo ogni mossa se il currentPlayer ha vinto 
-6. Cambiare il currentPlayer
-*/
