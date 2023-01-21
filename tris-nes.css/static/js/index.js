@@ -116,11 +116,11 @@ for (let i = 0; i < cells.length; i++) {
 				".output"
 			).innerHTML = `hai vinto player ${currentPlayer}`;
 			document.querySelector(".output").classList.add("colorOutput");
-			//come fare per non far più cliccare il link al player
+			document.querySelectorAll(".button").classList.add("noClick")
 		} else if (count === 9 && !win) {
 			document.querySelector(".output").innerHTML = `pareggio`;
 			document.querySelector(".output").classList.add("colorOutput");
-			//come fare per non far più cliccare il link al player
+			document.querySelectorAll(".button").classList.add("noClick")
 		}
 
 		//punto 6

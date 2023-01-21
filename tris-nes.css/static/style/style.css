@@ -171,19 +171,19 @@ div.nes-container {
 }
 
 @media only screen and (max-width: 360px) {
-	
 	.output {
 		margin-top: 20px;
 		color: transparent;
 		font-size: 14px;
 	}
+
 	.colorOutput {
 		color: white;
 		opacity: 0.9;
-		transition: all 1.5s ease-in-out;
 	}
 
-	.button.player1.nes-icon.close.is-medium, .button.player2.nes-icon.coin.is-medium{
+	.button.player1.nes-icon.close.is-medium,
+	.button.player2.nes-icon.coin.is-medium {
 		width: 25px;
 		height: 25px;
 		margin: 0;
@@ -192,5 +192,9 @@ div.nes-container {
 	div.nes-container {
 		margin-top: 25px;
 		width: 90%;
+	}
+
+	.nes-icon.is-medium {
+		margin-right: 0;
 	}
 }
