@@ -72,6 +72,8 @@ let grid = [
 	[null, null, null],
 ];
 
+let count = 0;
+
 cellIsOccupied = true;
 let v1, v2;
 
@@ -88,23 +90,22 @@ for (let i = 0; i < cells.length; i++) {
 
 		console.log(cellIsOccupied);
 		if (!cellIsOccupied) {
-			// Mettiamo una X o un O a seconda del turno del player
-			// Cambiamo il currentPlayer -> currentPlayer = 2
-
+			
+			count++;
 			v1 = cells[i].dataset.row;
 			v2 = cells[i].dataset.cell;
 
 			if (currentPlayer === "X") {
 				e.currentTarget.classList.toggle("player1");
-				cells[i].classList.add("nes-icon")
-				cells[i].classList.add("close")
-				cells[i].classList.add("is-medium")
+				cells[i].classList.add("nes-icon");
+				cells[i].classList.add("close");
+				cells[i].classList.add("is-medium");
 				grid[v1][v2] = "X";
 			} else {
 				e.currentTarget.classList.toggle("player2");
-				cells[i].classList.add("nes-icon")
-				cells[i].classList.add("coin")
-				cells[i].classList.add("is-medium")
+				cells[i].classList.add("nes-icon");
+				cells[i].classList.add("coin");
+				cells[i].classList.add("is-medium");
 				grid[v1][v2] = "O";
 			}
 		}
@@ -112,11 +113,15 @@ for (let i = 0; i < cells.length; i++) {
 		let win = checkWinner(currentPlayer);
 
 		if (win) {
-			
 			document.querySelector(
 				".output"
 			).innerHTML = `hai vinto player ${currentPlayer}`;
-			document.querySelector(".output").classList.add("colorOutput")
+			document.querySelector(".output").classList.add("colorOutput");
+		}
+
+		if (count === 9 && !win) {
+			document.querySelector(".output").innerHTML = `pareggio`;
+			document.querySelector(".output").classList.add("colorOutput");
 		}
 
 		//punto 6

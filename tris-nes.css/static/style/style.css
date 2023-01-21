@@ -123,7 +123,7 @@ div.nes-container {
 
 .paginaIniziale {
 	color: grey;
-	margin-top: 70px;
+	margin-top: 60px;
 	text-decoration: underline;
 }
 
@@ -131,36 +131,35 @@ div.nes-container {
 	position: static;
 }
 
-.player1{
+.player1 {
 	text-decoration: none;
 }
 
-.player2{
+.player2 {
 	text-decoration: none;
 }
 
-.output{
+.output {
 	margin-top: 70px;
 	color: transparent;
 	font-size: 50px;
 }
 
-.colorOutput{
+.colorOutput {
 	color: white;
 	opacity: 0.9;
-	transition: all 1s ease-in-out;
+	transition: all 1.5s ease-in-out;
 }
 
-
-.nes-icon.close::before{
+.nes-icon.close::before {
 	color: #d71d2b;
 }
-.button.player1.nes-icon.close.is-medium{
+.button.player1.nes-icon.close.is-medium {
 	left: 25%;
 	top: 25%;
 }
 
-.button.player2.nes-icon.coin.is-medium{
+.button.player2.nes-icon.coin.is-medium {
 	left: 25%;
 	top: 25%;
 }
