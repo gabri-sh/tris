@@ -125,6 +125,7 @@ div.nes-container {
 	color: grey;
 	margin-top: 60px;
 	text-decoration: underline;
+	opacity: 0.9;
 }
 
 .nes-table.is-dark::before {
@@ -165,9 +166,8 @@ div.nes-container {
 	top: 25%;
 }
 
-.noClick {
-	pointer-events: none;
-	cursor: default;
+.paginaIniziale:hover{
+	color: white;
 }
 
 @media only screen and (max-width: 360px) {
