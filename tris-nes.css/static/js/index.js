@@ -1,53 +1,63 @@
 //il controllo della vittoria, verrà fatto in base al player che cambierà ogni turno
 let cells = document.querySelectorAll(".button");
 let resetBtn = document.querySelector(".resetBtn");
+let isGameFinish = false;
 
 function checkWinner(player) {
 	if (grid[0][0] === player && grid[1][1] === player && grid[2][2] === player) {
+		isGameFinish = true;
 		return true;
 	} else if (
 		grid[0][2] === player &&
 		grid[1][1] === player &&
 		grid[2][0] === player
 	) {
+		isGameFinish = true;
 		return true;
 	} else if (
 		grid[0][0] === player &&
 		grid[1][0] === player &&
 		grid[2][0] === player
 	) {
+		isGameFinish = true;
 		return true;
 	} else if (
 		grid[0][1] === player &&
 		grid[1][1] === player &&
 		grid[2][1] === player
 	) {
+		isGameFinish = true;
 		return true;
 	} else if (
 		grid[0][2] === player &&
 		grid[1][2] === player &&
 		grid[2][2] === player
 	) {
+		isGameFinish = true;
 		return true;
 	} else if (
 		grid[0][0] === player &&
 		grid[0][1] === player &&
 		grid[0][2] === player
 	) {
+		isGameFinish = true;
 		return true;
 	} else if (
 		grid[1][0] === player &&
 		grid[1][1] === player &&
 		grid[1][2] === player
 	) {
+		isGameFinish = true;
 		return true;
 	} else if (
 		grid[2][0] === player &&
 		grid[2][1] === player &&
 		grid[2][2] === player
 	) {
+		isGameFinish = true;
 		return true;
 	} else {
+		//isGameFinish = true;
 		return false;
 	}
 }
@@ -89,7 +99,8 @@ for (let i = 0; i < cells.length; i++) {
 			e.currentTarget.classList.contains("player1");
 
 		console.log(cellIsOccupied);
-		if (!cellIsOccupied) {
+		if (!cellIsOccupied && !isGameFinish) {
+			//implementare la condizione se la cella non è occupata e il gioco non è finito
 			count++;
 			v1 = cells[i].dataset.row;
 			v2 = cells[i].dataset.cell;
@@ -116,11 +127,11 @@ for (let i = 0; i < cells.length; i++) {
 				".output"
 			).innerHTML = `hai vinto player ${currentPlayer}`;
 			document.querySelector(".output").classList.add("colorOutput");
-			document.querySelectorAll(".button").classList.add("noClick")
+			document.querySelectorAll(".button").classList.add("noClick");
 		} else if (count === 9 && !win) {
 			document.querySelector(".output").innerHTML = `pareggio`;
 			document.querySelector(".output").classList.add("colorOutput");
-			document.querySelectorAll(".button").classList.add("noClick")
+			document.querySelectorAll(".button").classList.add("noClick");
 		}
 
 		//punto 6
