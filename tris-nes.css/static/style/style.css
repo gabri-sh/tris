@@ -170,7 +170,7 @@ div.nes-container {
 	color: white;
 }
 
-@media only screen and (max-width: 476px) {
+@media only screen and (max-width: 426px) {
 	.output {
 		margin-top: 20px;
 		color: transparent;
