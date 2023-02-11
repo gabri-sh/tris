@@ -71,16 +71,80 @@ resetBtn.addEventListener("click", function (e) {
 	RefreshWindow();
 });
 
-//il reset button e la funzione che verifica il vincitore funzionano
-//resta da implementare la parte che quando spingi una casella esce l'icona del personaggio su quella casella
-//per decrertare il vincitore, fare div con all'interno uno span di output che dirà il giocatore vincitore
-
 let currentPlayer = "X";
 let grid = [
 	[null, null, null],
 	[null, null, null],
 	[null, null, null],
 ];
+
+function getEmptyCells(grid) {
+	//funzione funziona
+	let emptyCells = [];
+	for (let i = 0; i < grid.length; i++) {
+		for (let j = 0; j < grid.length; j++) {
+			if (grid[i][j] === null) {
+				emptyCells.push(i + " - " + j);
+			}
+		}
+	}
+	return emptyCells;
+}
+
+function trovaCella(v1, v2) {
+	let posizioneCella;
+	if (v1 == 0 && v2 == 0) {
+		posizioneCella = 0;
+		return posizioneCella;
+	}
+	if (v1 == 0 && v2 == 1) {
+		posizioneCella = 1;
+		return posizioneCella;
+	}
+	if (v1 == 0 && v2 == 2) {
+		posizioneCella = 2;
+		return posizioneCella;
+	}
+	if (v1 == 1 && v2 == 0) {
+		posizioneCella = 3;
+		return posizioneCella;
+	}
+	if (v1 == 1 && v2 == 1) {
+		posizioneCella = 4;
+		return posizioneCella;
+	}
+	if (v1 == 1 && v2 == 2) {
+		posizioneCella = 5;
+		return posizioneCella;
+	}
+	if (v1 == 2 && v2 == 0) {
+		posizioneCella = 6;
+		return posizioneCella;
+	}
+	if (v1 == 2 && v2 == 1) {
+		posizioneCella = 7;
+		return posizioneCella;
+	}
+	if (v1 == 2 && v2 == 2) {
+		posizioneCella = 8;
+		return posizioneCella;
+	}
+}
+
+function getRandomMove(grid) {
+	let celleLibere = getEmptyCells(grid);
+
+	let cellaCasuale =
+		Math.floor(Math.random() * (celleLibere.length - 1 - 0 + 1)) + 0; //questa funzione mi restituisce l'indice che corrisponde
+	//all'indice casuale che devo andare a riempire della griglia
+	let valoreMossa1 = parseInt(celleLibere[cellaCasuale].substring(0, 1)); //coordinata x
+	let valoreMossa2 = parseInt(celleLibere[cellaCasuale].substring(4)); //cordinata y
+	//console.log(valoreMossa1, valoreMossa2);
+	//console.log(typeof (valoreMossa1, valoreMossa2));
+	grid[valoreMossa1][valoreMossa2] = "O";
+	return trovaCella(valoreMossa1, valoreMossa2);
+	//console.log(cellaCasuale)
+}
 
 let count = 0;
 
@@ -89,6 +153,7 @@ let v1, v2;
 
 for (let i = 0; i < cells.length; i++) {
 	cells[i].addEventListener("click", function (e) {
+		//inizio event listener
 		e.preventDefault();
 
 		console.log(`valore della i --> ${i}`);
@@ -105,20 +170,26 @@ for (let i = 0; i < cells.length; i++) {
 			v1 = cells[i].dataset.row;
 			v2 = cells[i].dataset.cell;
 
-			if (currentPlayer === "X") {
+			
 				e.currentTarget.classList.toggle("player1");
 				cells[i].classList.add("nes-icon");
 				cells[i].classList.add("close");
 				cells[i].classList.add("is-medium");
 				grid[v1][v2] = "X";
-			} else {
-				e.currentTarget.classList.toggle("player2");
-				cells[i].classList.add("nes-icon");
-				cells[i].classList.add("coin");
-				cells[i].classList.add("is-medium");
-				grid[v1][v2] = "O";
-			}
+			
+				
+			
 		}
+
+		//implementare qui la logica di gioco del computer
+
+		let cellRandom = getRandomMove(grid);
+
+		cells[cellRandom].classList.toggle("player2");
+		cells[cellRandom].classList.add("nes-icon");
+		cells[cellRandom].classList.add("coin");
+		cells[cellRandom].classList.add("is-medium");
+		//grid[v1][v2] = "O";
 
 		let win = checkWinner(currentPlayer);
 
