@@ -170,15 +170,11 @@ for (let i = 0; i < cells.length; i++) {
 			v1 = cells[i].dataset.row;
 			v2 = cells[i].dataset.cell;
 
-			
-				e.currentTarget.classList.toggle("player1");
-				cells[i].classList.add("nes-icon");
-				cells[i].classList.add("close");
-				cells[i].classList.add("is-medium");
-				grid[v1][v2] = "X";
-			
-				
-			
+			e.currentTarget.classList.toggle("player1");
+			cells[i].classList.add("nes-icon");
+			cells[i].classList.add("close");
+			cells[i].classList.add("is-medium");
+			grid[v1][v2] = "X";
 		}
 
 		//implementare qui la logica di gioco del computer
