@@ -170,6 +170,12 @@ div.nes-container {
 	color: white;
 }
 
+a.button.player1.nes-icon.close.is-medium, a.button.player2.nes-icon.coin.is-medium{
+	width: 20px;
+	height: 20px;
+	margin: 0;
+}
+
 @media only screen and (max-width: 426px) {
 	.output {
 		margin-top: 20px;
@@ -199,3 +205,4 @@ div.nes-container {
 		margin-right: 0;
 	}
 }
+

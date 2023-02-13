@@ -2,6 +2,8 @@
 let cells = document.querySelectorAll(".button");
 let resetBtn = document.querySelector(".resetBtn");
 let isGameFinish = false;
+let win;
+const output = document.querySelector(".output");
 
 function checkWinner(player) {
 	if (grid[0][0] === player && grid[1][1] === player && grid[2][2] === player) {
@@ -62,13 +64,9 @@ function checkWinner(player) {
 	}
 }
 
-function RefreshWindow() {
-	window.location.reload(true);
-}
-
-resetBtn.addEventListener("click", function (e) {
-	e.preventDefault();
-	RefreshWindow();
+resetBtn.addEventListener("click", (event) => {
+	event.preventDefault();
+	location.reload();
 });
 
 let currentPlayer = "X";
@@ -163,10 +161,10 @@ for (let i = 0; i < cells.length; i++) {
 			e.currentTarget.classList.contains("player2") ||
 			e.currentTarget.classList.contains("player1");
 
-		console.log(cellIsOccupied);
+		//console.log(cellIsOccupied);
+
 		if (!cellIsOccupied && !isGameFinish) {
 			//implementare la condizione se la cella non è occupata e il gioco non è finito
-			count++;
 			v1 = cells[i].dataset.row;
 			v2 = cells[i].dataset.cell;
 
@@ -175,29 +173,26 @@ for (let i = 0; i < cells.length; i++) {
 			cells[i].classList.add("close");
 			cells[i].classList.add("is-medium");
 			grid[v1][v2] = "X";
+			win = checkWinner(currentPlayer);
+
+			let cellRandom = getRandomMove(grid);
+
+			cells[cellRandom].classList.toggle("player2");
+			cells[cellRandom].classList.add("nes-icon");
+			cells[cellRandom].classList.add("coin");
+			cells[cellRandom].classList.add("is-medium");
+			win = checkWinner(currentPlayer);
+
+			count = count + 2;
 		}
 
-		//implementare qui la logica di gioco del computer
-
-		let cellRandom = getRandomMove(grid);
-
-		cells[cellRandom].classList.toggle("player2");
-		cells[cellRandom].classList.add("nes-icon");
-		cells[cellRandom].classList.add("coin");
-		cells[cellRandom].classList.add("is-medium");
-		//grid[v1][v2] = "O";
-
-		let win = checkWinner(currentPlayer);
-
 		if (win) {
-			document.querySelector(
-				".output"
-			).innerHTML = `hai vinto player ${currentPlayer}`;
-			document.querySelector(".output").classList.add("colorOutput");
+			output.innerHTML = `hai vinto player ${currentPlayer}`;
+			output.classList.add("colorOutput");
 			//document.querySelectorAll(".button").classList.add("noClick");
-		} else if (count === 9 && !win) {
-			document.querySelector(".output").innerHTML = `pareggio`;
-			document.querySelector(".output").classList.add("colorOutput");
+		} else if (count >= 9 && !win) {
+			output.innerHTML = `pareggio`;
+			output.classList.add("colorOutput");
 			//document.querySelectorAll(".button").classList.add("noClick");
 		}
 
@@ -209,3 +204,4 @@ for (let i = 0; i < cells.length; i++) {
 		}
 	});
 }
+
