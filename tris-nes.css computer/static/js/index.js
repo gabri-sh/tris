@@ -2,65 +2,60 @@
 let cells = document.querySelectorAll(".button");
 let resetBtn = document.querySelector(".resetBtn");
 let isGameFinish = false;
-let win;
-const output = document.querySelector(".output");
 
-function checkWinner(player) {
-	if (grid[0][0] === player && grid[1][1] === player && grid[2][2] === player) {
-		isGameFinish = true;
-		return true;
-	} else if (
-		grid[0][2] === player &&
-		grid[1][1] === player &&
-		grid[2][0] === player
+let output = document.querySelector(".output");
+
+function checkWinner(grid, contatore) {
+	let winner;
+	for (let i = 0; i < 3; i++) {
+		if (
+			grid[i][0] != null &&
+			grid[i][0] === grid[i][1] &&
+			grid[i][1] === grid[i][2]
+		) {
+			isGameFinish = true;
+			winner = grid[i][0];
+			return winner;
+		}
+	}
+
+	for (let j = 0; j < 3; j++) {
+		if (
+			grid[0][j] != null &&
+			grid[0][j] === grid[1][j] &&
+			grid[1][j] === grid[2][j]
+		) {
+			isGameFinish = true;
+			winner = grid[0][j];
+			return winner;
+		}
+	}
+
+	if (
+		grid[0][0] != null &&
+		grid[0][0] === grid[1][1] &&
+		grid[1][1] === grid[2][2]
 	) {
 		isGameFinish = true;
-		return true;
-	} else if (
-		grid[0][0] === player &&
-		grid[1][0] === player &&
-		grid[2][0] === player
+		winner = grid[0][0];
+		return winner;
+	}
+
+	if (
+		grid[0][2] != null &&
+		grid[0][2] === grid[1][1] &&
+		grid[1][1] === grid[2][0]
 	) {
 		isGameFinish = true;
-		return true;
-	} else if (
-		grid[0][1] === player &&
-		grid[1][1] === player &&
-		grid[2][1] === player
-	) {
+		winner = grid[0][2];
+		return winner;
+	}
+
+	//controllo per il pareggio
+
+	if (contatore >= 9 && !isGameFinish) {
 		isGameFinish = true;
-		return true;
-	} else if (
-		grid[0][2] === player &&
-		grid[1][2] === player &&
-		grid[2][2] === player
-	) {
-		isGameFinish = true;
-		return true;
-	} else if (
-		grid[0][0] === player &&
-		grid[0][1] === player &&
-		grid[0][2] === player
-	) {
-		isGameFinish = true;
-		return true;
-	} else if (
-		grid[1][0] === player &&
-		grid[1][1] === player &&
-		grid[1][2] === player
-	) {
-		isGameFinish = true;
-		return true;
-	} else if (
-		grid[2][0] === player &&
-		grid[2][1] === player &&
-		grid[2][2] === player
-	) {
-		isGameFinish = true;
-		return true;
-	} else {
-		//isGameFinish = true;
-		return false;
+		return "pareggio";
 	}
 }
 
@@ -93,40 +88,25 @@ function trovaCella(v1, v2) {
 	let posizioneCella;
 	if (v1 == 0 && v2 == 0) {
 		posizioneCella = 0;
-		return posizioneCella;
-	}
-	if (v1 == 0 && v2 == 1) {
+	} else if (v1 == 0 && v2 == 1) {
 		posizioneCella = 1;
-		return posizioneCella;
-	}
-	if (v1 == 0 && v2 == 2) {
+	} else if (v1 == 0 && v2 == 2) {
 		posizioneCella = 2;
-		return posizioneCella;
-	}
-	if (v1 == 1 && v2 == 0) {
+	} else if (v1 == 1 && v2 == 0) {
 		posizioneCella = 3;
-		return posizioneCella;
-	}
-	if (v1 == 1 && v2 == 1) {
+	} else if (v1 == 1 && v2 == 1) {
 		posizioneCella = 4;
-		return posizioneCella;
-	}
-	if (v1 == 1 && v2 == 2) {
+	} else if (v1 == 1 && v2 == 2) {
 		posizioneCella = 5;
-		return posizioneCella;
-	}
-	if (v1 == 2 && v2 == 0) {
+	} else if (v1 == 2 && v2 == 0) {
 		posizioneCella = 6;
-		return posizioneCella;
-	}
-	if (v1 == 2 && v2 == 1) {
+	} else if (v1 == 2 && v2 == 1) {
 		posizioneCella = 7;
-		return posizioneCella;
-	}
-	if (v1 == 2 && v2 == 2) {
+	} else {
 		posizioneCella = 8;
-		return posizioneCella;
 	}
+
+	return posizioneCella;
 }
 
 function getRandomMove(grid) {
@@ -137,11 +117,8 @@ function getRandomMove(grid) {
 	//all'indice casuale che devo andare a riempire della griglia
 	let valoreMossa1 = parseInt(celleLibere[cellaCasuale].substring(0, 1)); //coordinata x
 	let valoreMossa2 = parseInt(celleLibere[cellaCasuale].substring(4)); //cordinata y
-	//console.log(valoreMossa1, valoreMossa2);
-	//console.log(typeof (valoreMossa1, valoreMossa2));
 	grid[valoreMossa1][valoreMossa2] = "O";
 	return trovaCella(valoreMossa1, valoreMossa2);
-	//console.log(cellaCasuale)
 }
 
 let count = 0;
@@ -154,17 +131,14 @@ for (let i = 0; i < cells.length; i++) {
 		//inizio event listener
 		e.preventDefault();
 
-		console.log(`valore della i --> ${i}`);
-		console.log(`valore di player --> ${currentPlayer}`);
+		//console.log(`valore della i --> ${i}`);
+		//console.log(`valore di player --> ${currentPlayer}`);
 
 		cellIsOccupied =
 			e.currentTarget.classList.contains("player2") ||
 			e.currentTarget.classList.contains("player1");
 
-		//console.log(cellIsOccupied);
-
 		if (!cellIsOccupied && !isGameFinish) {
-			//implementare la condizione se la cella non è occupata e il gioco non è finito
 			v1 = cells[i].dataset.row;
 			v2 = cells[i].dataset.cell;
 
@@ -173,35 +147,31 @@ for (let i = 0; i < cells.length; i++) {
 			cells[i].classList.add("close");
 			cells[i].classList.add("is-medium");
 			grid[v1][v2] = "X";
-			win = checkWinner(currentPlayer);
-
-			let cellRandom = getRandomMove(grid);
-
-			cells[cellRandom].classList.toggle("player2");
-			cells[cellRandom].classList.add("nes-icon");
-			cells[cellRandom].classList.add("coin");
-			cells[cellRandom].classList.add("is-medium");
-			win = checkWinner(currentPlayer);
 
 			count = count + 2;
-		}
+			winner = checkWinner(grid, count);
 
-		if (win) {
-			output.innerHTML = `hai vinto player ${currentPlayer}`;
-			output.classList.add("colorOutput");
-			//document.querySelectorAll(".button").classList.add("noClick");
-		} else if (count >= 9 && !win) {
-			output.innerHTML = `pareggio`;
-			output.classList.add("colorOutput");
-			//document.querySelectorAll(".button").classList.add("noClick");
-		}
+			if (winner === "X") {
+				output.innerHTML = `hai vinto player ${currentPlayer}`;
+				output.classList.add("colorOutput");
+			} else if (count >= 9 && winner === "pareggio") {
+				output.innerHTML = `pareggio`;
+				output.classList.add("colorOutput");
+			} else {
+				let cellRandom = getRandomMove(grid);
+				console.log(cellRandom);
 
-		//punto 6
-		if (currentPlayer === "X") {
-			currentPlayer = "O";
-		} else {
-			currentPlayer = "X";
+				cells[cellRandom].classList.toggle("player2");
+				cells[cellRandom].classList.add("nes-icon");
+				cells[cellRandom].classList.add("coin");
+				cells[cellRandom].classList.add("is-medium");
+				winner = checkWinner(grid, count);
+
+				if (winner === "O") {
+					output.innerHTML = `hai vinto player O`;
+					output.classList.add("colorOutput");
+				}
+			}
 		}
 	});
 }
-
