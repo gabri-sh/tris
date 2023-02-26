@@ -6,9 +6,9 @@ let output = document.querySelector(".output");
 
 //quando vince player O, che sia computer o che sia un umano, deve partire questa funzione --> audioSconfitta
 
-function playAudioSconfitta(url) {
-	let audioSconfitta = new Audio(url);
-	audioSconfitta.play();
+function playAudio(url) {
+	let audio = new Audio(url);
+	audio.play();
 }
 
 function checkWinner(grid, contatore) {
@@ -148,6 +148,7 @@ for (let i = 0; i < cells.length; i++) {
 			cells[i].classList.add("nes-icon");
 			cells[i].classList.add("close");
 			cells[i].classList.add("is-medium");
+			playAudio("suonds/playerX.wav")
 			grid[v1][v2] = "X";
 
 			count = count + 2;
@@ -157,7 +158,7 @@ for (let i = 0; i < cells.length; i++) {
 				output.innerHTML = `hai vinto player ${currentPlayer}`;
 				output.classList.add("colorOutput");
 			} else if (count >= 9 && winner === "pareggio") {
-				playAudioSconfitta("../sounds/lose.mp3");
+				playAudio("sounds/lose.wav");
 				output.innerHTML = `pareggio`;
 				output.classList.add("colorOutput");
 			} else {
@@ -171,7 +172,7 @@ for (let i = 0; i < cells.length; i++) {
 				winner = checkWinner(grid, count);
 
 				if (winner === "O") {
-					playAudioSconfitta("../sounds/lose.mp3");
+					playAudio("sounds/lose.wav");
 					output.innerHTML = `hai vinto player O`;
 					output.classList.add("colorOutput");
 				}
