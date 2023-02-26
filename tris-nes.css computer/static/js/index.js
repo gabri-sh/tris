@@ -2,8 +2,14 @@
 let cells = document.querySelectorAll(".button");
 let resetBtn = document.querySelector(".resetBtn");
 let isGameFinish = false;
-
 let output = document.querySelector(".output");
+
+//quando vince player O, che sia computer o che sia un umano, deve partire questa funzione --> audioSconfitta
+
+function playAudioSconfitta(url) {
+	let audioSconfitta = new Audio(url);
+	audioSconfitta.play();
+}
 
 function checkWinner(grid, contatore) {
 	let winner;
@@ -115,8 +121,8 @@ function getRandomMove(grid) {
 	let cellaCasuale =
 		Math.floor(Math.random() * (celleLibere.length - 1 - 0 + 1)) + 0; //questa funzione mi restituisce l'indice che corrisponde
 	//all'indice casuale che devo andare a riempire della griglia
-	let valoreMossa1 = parseInt(celleLibere[cellaCasuale].substring(0, 1)); //coordinata x
-	let valoreMossa2 = parseInt(celleLibere[cellaCasuale].substring(4)); //cordinata y
+	let valoreMossa1 = parseInt(celleLibere[cellaCasuale].substring(0, 1));
+	let valoreMossa2 = parseInt(celleLibere[cellaCasuale].substring(4));
 	grid[valoreMossa1][valoreMossa2] = "O";
 	return trovaCella(valoreMossa1, valoreMossa2);
 }
@@ -128,11 +134,7 @@ let v1, v2;
 
 for (let i = 0; i < cells.length; i++) {
 	cells[i].addEventListener("click", function (e) {
-		//inizio event listener
 		e.preventDefault();
-
-		//console.log(`valore della i --> ${i}`);
-		//console.log(`valore di player --> ${currentPlayer}`);
 
 		cellIsOccupied =
 			e.currentTarget.classList.contains("player2") ||
@@ -155,6 +157,7 @@ for (let i = 0; i < cells.length; i++) {
 				output.innerHTML = `hai vinto player ${currentPlayer}`;
 				output.classList.add("colorOutput");
 			} else if (count >= 9 && winner === "pareggio") {
+				playAudioSconfitta("../sounds/lose.mp3");
 				output.innerHTML = `pareggio`;
 				output.classList.add("colorOutput");
 			} else {
@@ -168,6 +171,7 @@ for (let i = 0; i < cells.length; i++) {
 				winner = checkWinner(grid, count);
 
 				if (winner === "O") {
+					playAudioSconfitta("../sounds/lose.mp3");
 					output.innerHTML = `hai vinto player O`;
 					output.classList.add("colorOutput");
 				}
