@@ -1,0 +1,208 @@
+* {
+	margin: 0;
+	box-sizing: border-box;
+	font-family: "Press Start 2P", cursive;
+}
+
+html,
+body {
+	min-height: 100vh;
+}
+
+div.nes-container {
+	/*width: 500px;*/
+	margin-top: 50px;
+	border-color: #827a35;
+}
+
+.max-container {
+	display: flex;
+	flex-direction: column;
+	justify-items: center;
+	align-items: center;
+}
+
+.hero {
+	background-image: url(../images/hero.jpg);
+	min-height: 100vh;
+	background-position: center;
+	background-size: cover;
+}
+
+.nes-container.with-title > .title {
+	background-color: #d71d2b;
+	color: white;
+}
+
+.nes-table-responsive {
+	margin-top: 55px;
+}
+
+.nes-table.is-dark {
+	background-color: #58542d;
+}
+
+.flex {
+	display: flex;
+}
+
+.playerContainer {
+	align-items: center;
+	justify-content: center;
+}
+
+.flex {
+	display: flex;
+}
+
+.griglia {
+	margin-top: 60px;
+}
+
+.row {
+	align-items: center;
+	justify-content: center;
+}
+
+.cell {
+	width: 90px;
+	height: 90px;
+	position: relative;
+}
+
+.button {
+	display: block;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#first-row .cell:nth-child(1),
+#second-row .cell:nth-child(1),
+#second-row .cell:nth-child(2) {
+	border-bottom: 5px solid #827a35;
+	border-right: 5px solid #827a35;
+}
+
+#first-row .cell:nth-child(2) {
+	border-bottom: 5px solid #827a35;
+	border-right: 5px solid #827a35;
+}
+
+#first-row .cell:nth-child(3),
+#second-row .cell:nth-child(3) {
+	border-bottom: 5px solid #827a35;
+}
+
+#third-row .cell:nth-child(1) {
+	border-right: 5px solid #827a35;
+}
+
+#third-row .cell:nth-child(2) {
+	border-right: 5px solid #827a35;
+}
+
+.nes-btn.is-error {
+	margin-top: 60px;
+}
+
+.cell:hover {
+	-webkit-box-shadow: 0px 20px 0px -10px #ffffff, 0px -20px 0px -10px #ffffff,
+		20px 0px 0px -10px #ffffff, -20px 0px 0px -10px #ffffff,
+		0px 0px 0px 10px #d71d2b, inset 5px 5px 15px 5px rgba(0, 0, 0, 0);
+	box-shadow: 0px 20px 0px -10px #ffffff, 0px -20px 0px -10px #ffffff,
+		20px 0px 0px -10px #ffffff, -20px 0px 0px -10px #ffffff,
+		0px 0px 0px 10px #d71d2b, inset 5px 5px 15px 5px rgba(0, 0, 0, 0);
+}
+
+.nes-text.is-primary {
+	color: gray;
+}
+
+.paginaIniziale {
+	color: grey;
+	margin-top: 60px;
+	text-decoration: underline;
+	opacity: 0.9;
+}
+
+.nes-table.is-dark::before {
+	position: static;
+}
+
+.player1 {
+	text-decoration: none;
+}
+
+.player2 {
+	text-decoration: none;
+}
+
+.output {
+	margin-top: 70px;
+	color: transparent;
+	font-size: 50px;
+}
+
+.colorOutput {
+	color: white;
+	opacity: 0.9;
+	transition: all 1.5s ease-in-out;
+	text-decoration: underline;
+}
+
+.nes-icon.close::before {
+	color: #d71d2b;
+}
+.button.player1.nes-icon.close.is-medium {
+	left: 25%;
+	top: 25%;
+}
+
+.button.player2.nes-icon.coin.is-medium {
+	left: 25%;
+	top: 25%;
+}
+
+.paginaIniziale:hover {
+	color: white;
+}
+
+a.button.player1.nes-icon.close.is-medium, a.button.player2.nes-icon.coin.is-medium{
+	width: 20px;
+	height: 20px;
+	margin: 0;
+}
+
+@media only screen and (max-width: 426px) {
+	.output {
+		margin-top: 20px;
+		color: transparent;
+		font-size: 14px;
+	}
+
+	.colorOutput {
+		color: white;
+		opacity: 0.9;
+		font-size: 14px;
+	}
+
+	.button.player1.nes-icon.close.is-medium,
+	.button.player2.nes-icon.coin.is-medium {
+		width: 25px;
+		height: 25px;
+		margin: 0;
+	}
+
+	div.nes-container {
+		margin-top: 25px;
+		width: 90%;
+	}
+
+	.nes-icon.is-medium {
+		margin-right: 0;
+	}
+}
+
