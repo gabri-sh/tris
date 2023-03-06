@@ -88,7 +88,13 @@ let v1, v2;
 
 function playAudio(url) {
 	let audio = new Audio(url);
+	setTimeout(() => {
+		console.log("Delayed for 2 second.");
+	}, 2000);
 	audio.play();
+	setTimeout(() => {
+		console.log("Delayed for 2 second.");
+	}, 2000);
 }
 
 for (let i = 0; i < cells.length; i++) {

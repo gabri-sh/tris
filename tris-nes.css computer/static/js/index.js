@@ -1,4 +1,3 @@
-
 let cells = document.querySelectorAll(".button");
 let resetBtn = document.querySelector(".resetBtn");
 let isGameFinish = false;
@@ -127,7 +126,13 @@ let v1, v2;
 
 function playAudio(url) {
 	let audio = new Audio(url);
+	setTimeout(() => {
+		console.log("Delayed for 2 second.");
+	}, 2000);
 	audio.play();
+	setTimeout(() => {
+		console.log("Delayed for 2 second.");
+	}, 2000);
 }
 
 for (let i = 0; i < cells.length; i++) {
@@ -146,24 +151,25 @@ for (let i = 0; i < cells.length; i++) {
 			cells[i].classList.add("nes-icon");
 			cells[i].classList.add("close");
 			cells[i].classList.add("is-medium");
-			playAudio('static/sound/playerX.mp3');
+
+			playAudio("static/sound/playerX.mp3");
 			grid[v1][v2] = "X";
 
 			count = count + 2;
 			winner = checkWinner(grid, count);
 
 			if (winner === "X") {
-				playAudio('static/sound/win.mp3');
+				playAudio("static/sound/win.mp3");
 				output.innerHTML = `hai vinto player ${currentPlayer}`;
 				output.classList.add("colorOutput");
 			} else if (count >= 9 && winner === "pareggio") {
-				playAudio('static/sound/lose.mp3');
+				playAudio("static/sound/lose.mp3");
 				output.innerHTML = `pareggio`;
 				output.classList.add("colorOutput");
 			} else {
 				let cellRandom = getRandomMove(grid);
 				console.log(cellRandom);
-				//playAudio('static/sound/coin.mp3');
+
 				cells[cellRandom].classList.toggle("player2");
 				cells[cellRandom].classList.add("nes-icon");
 				cells[cellRandom].classList.add("coin");
@@ -171,7 +177,7 @@ for (let i = 0; i < cells.length; i++) {
 				winner = checkWinner(grid, count);
 
 				if (winner === "O") {
-					playAudio('static/sound/lose.mp3');
+					playAudio("static/sound/lose.mp3");
 					output.innerHTML = `hai vinto player O`;
 					output.classList.add("colorOutput");
 				}
