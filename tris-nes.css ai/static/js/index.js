@@ -69,19 +69,17 @@ let grid = [
 	[null, null, null],
 ];
 
-/*
 function getEmptyCells(grid) {
 	let emptyCells = [];
 	for (let i = 0; i < grid.length; i++) {
 		for (let j = 0; j < grid.length; j++) {
 			if (grid[i][j] === null) {
-				emptyCells.push(i + " - " + j);
+				emptyCells.push([i, j]);
 			}
 		}
 	}
 	return emptyCells;
 }
-*/
 
 function trovaCella(v1, v2) {
 	let posizioneCella;
@@ -108,25 +106,34 @@ function trovaCella(v1, v2) {
 	return posizioneCella;
 }
 
-function getBestMove() {
-	let bestScore = -Infinity;
-	let bestMove;
-	//let emptyCells = getEmptyCells(grid);
-
-	for (let i = 0; i < 3; i++) {
-		for (let j = 0; j < 3; j++) {
-			if (grid[i][j] === null) {
-				grid[i][j] = "O";
-				let currentCellScore = minimax(grid, "O");
-				grid[i][j] = null;
-				if (currentCellScore > bestScore) {
-					bestScore = currentCellScore;
-					bestMove = [i, j];
-				}
-			}
-		}
+function getBestMove(grid, player) {
+	let bestScore;
+	if (player === "X") {
+		bestScore = Infinity;
+	} else if (player === "O") {
+		bestScore = -Infinity;
 	}
-	grid[bestMove[0]][bestMove[1]] = "O";
+
+	let bestMove = null;
+	let emptyCells = getEmptyCells(grid);
+
+	emptyCells.forEach(function (element) {
+		//console.log("celle vuote" + element)
+		i = element[0];
+		j = element[j];
+		grid[i][j] = player;
+
+		let currentMoveScore = minimax(grid, player);
+		grid[i][j] = null;
+
+		if (currentMoveScore > bestScore) {
+			bestScore = currentMoveScore;
+			bestMove = [i, j];
+		} else {
+			bestScore = currentMoveScore;
+			bestMove = [i, j];
+		}
+	});
 	return bestMove;
 }
 
@@ -136,45 +143,52 @@ let scores = {
 	pareggio: 0,
 };
 
-function minimax(grid, giocatore) {
-	//il parametro giocatoreMax serve per vedere se bisogna eseguire la funzione che massimizza o minimizza il punteggio
-	/*let result = checkWinner(grid, count);
-
-	if (result !== null) {
-		return scores[result];
+function minimax(grid, player) {
+	let bestScore;
+	let score;
+	if (player === "O") {
+		bestScore = Infinity;
+	} else {
+		bestScore = -Infinity;
 	}
 
-	if (giocatore === "O") {
-		let bestScore = -Infinity;
-		for (let i = 0; i < 3; i++) {
-			for (let j = 0; j < 3; j++) {
-				if (grid[i][j] === null) {
-					grid[i][j] = "O";
-					let score = minimax(grid, "O");
-					grid[i][j] = null;
+	let emptyCells = getEmptyCells(grid);
 
-					bestScore = max(score, bestScore);
-				}
-			}
+	if (isGameFinish) {
+		let vincitore = checkWinner(grid, contatore);
+		if (vincitore === "O") {
+			return 1;
+		} else if (vincitore === "X") {
+			return 1;
+		} else if (vincitore === "pareggio") {
+			return 0;
 		}
-		return bestScore;
 	} else {
-		let bestScore = Infinity;
-		for (let i = 0; i < 3; i++) {
-			for (let j = 0; j < 3; j++) {
-				if (grid[i][j] === null) {
-					grid[i][j] = "X";
-					let score = minimax(grid, true);
-					grid[i][j] = null;
+		if (player === "O") {
+			emptyCells.forEach(function (element) {
+				let i = element[0];
+				let j = element[1];
 
-					bestScore = min(score, bestScore);
-				}
-			}
+				grid[i][j] = player;
+
+				score = minimax(grid, "X");
+
+				grid[i][j] = null;
+			});
+			bestScore = Math.max(bestScore, score);
+		} else {
+			emptyCells.forEach(function (element) {
+				let i = element[0];
+				let j = element[1];
+				grid[i][j] = player;
+				score = minimax(grid, "O");
+				grid[i][j] = null;
+			});
+			bestScore = Math.max(bestScore, score);
 		}
-		return bestScore;
-	}*/
+	}
 
-	return 1;
+	return bestScore;
 }
 
 let count = 0;
@@ -218,8 +232,10 @@ for (let i = 0; i < cells.length; i++) {
 				output.innerHTML = `pareggio`;
 				output.classList.add("colorOutput");
 			} else {
-				let mossaMigliore = getBestMove();
-				let mossaDaEseguire = trovaCella(mossaMigliore[0], mossaMigliore[1]);
+				let mossaMigliore = getBestMove(grid, "X");
+				let x = mossaMigliore[0];
+				let y = mossaMigliore[1];
+				let mossaDaEseguire = trovaCella(x, y);
 				cells[mossaDaEseguire].classList.toggle("player2");
 				cells[mossaDaEseguire].classList.add("nes-icon");
 				cells[mossaDaEseguire].classList.add("coin");
