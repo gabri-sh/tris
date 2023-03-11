@@ -90,10 +90,7 @@ function playAudio(url) {
 	let audio = new Audio(url);
 	setTimeout(() => {
 		console.log("Delayed for 2 second.");
-	}, 2000);
-	audio.play();
-	setTimeout(() => {
-		console.log("Delayed for 2 second.");
+		audio.play();
 	}, 2000);
 }
 
@@ -116,14 +113,14 @@ for (let i = 0; i < cells.length; i++) {
 			v2 = cells[i].dataset.cell;
 
 			if (currentPlayer === "X") {
-				playAudio('static/sound/playerX.mp3');
+				playAudio("static/sound/playerX.mp3");
 				e.currentTarget.classList.toggle("player1");
 				cells[i].classList.add("nes-icon");
 				cells[i].classList.add("close");
 				cells[i].classList.add("is-medium");
 				grid[v1][v2] = "X";
 			} else {
-				playAudio('static/sound/coin.mp3');
+				playAudio("static/sound/coin.mp3");
 				e.currentTarget.classList.toggle("player2");
 				cells[i].classList.add("nes-icon");
 				cells[i].classList.add("coin");
@@ -135,14 +132,14 @@ for (let i = 0; i < cells.length; i++) {
 		let win = checkWinner(currentPlayer);
 
 		if (win) {
-			playAudio('static/sound/win.mp3');
+			playAudio("static/sound/win.mp3");
 			document.querySelector(
 				".output"
 			).innerHTML = `hai vinto player ${currentPlayer}`;
 			document.querySelector(".output").classList.add("colorOutput");
 			//document.querySelectorAll(".button").classList.add("noClick");
 		} else if (count === 9 && !win) {
-			playAudio('static/sound/lose.mp3');
+			playAudio("static/sound/lose.mp3");
 			document.querySelector(".output").innerHTML = `pareggio`;
 			document.querySelector(".output").classList.add("colorOutput");
 			//document.querySelectorAll(".button").classList.add("noClick");

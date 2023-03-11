@@ -1,9 +1,9 @@
 let cells = document.querySelectorAll(".button");
 let resetBtn = document.querySelector(".resetBtn");
-let isGameFinish = false;
+//let isGameFinish = false;
 let output = document.querySelector(".output");
 
-function checkWinner(grid, contatore) {
+function checkWinner(grid) {
 	let winner;
 	for (let i = 0; i < 3; i++) {
 		if (
@@ -11,7 +11,6 @@ function checkWinner(grid, contatore) {
 			grid[i][0] === grid[i][1] &&
 			grid[i][1] === grid[i][2]
 		) {
-			isGameFinish = true;
 			winner = grid[i][0];
 			return winner;
 		}
@@ -23,7 +22,6 @@ function checkWinner(grid, contatore) {
 			grid[0][j] === grid[1][j] &&
 			grid[1][j] === grid[2][j]
 		) {
-			isGameFinish = true;
 			winner = grid[0][j];
 			return winner;
 		}
@@ -34,7 +32,6 @@ function checkWinner(grid, contatore) {
 		grid[0][0] === grid[1][1] &&
 		grid[1][1] === grid[2][2]
 	) {
-		isGameFinish = true;
 		winner = grid[0][0];
 		return winner;
 	}
@@ -44,17 +41,27 @@ function checkWinner(grid, contatore) {
 		grid[0][2] === grid[1][1] &&
 		grid[1][1] === grid[2][0]
 	) {
-		isGameFinish = true;
 		winner = grid[0][2];
 		return winner;
 	}
 
 	//controllo per il pareggio
 
-	if (contatore >= 9 && !isGameFinish) {
-		isGameFinish = true;
+	let emptyCells = 9;
+	for (let i = 0; i < 3; i++) {
+		for (let j = 0; j < 3; j++) {
+			if (grid[i][j] === "X" || grid[i][j] === "O") {
+				emptyCells--;
+			}
+		}
+	}
+	if (emptyCells === 0) {
 		return "pareggio";
 	}
+
+	//nel caso in cui non ha vinto nessuno restituisco null
+
+	return null;
 }
 
 resetBtn.addEventListener("click", (event) => {
@@ -125,23 +132,17 @@ function getBestMove(grid, player) {
 
 		let currentMoveScore = minimax(grid, player);
 		grid[i][j] = null;
-
-		if (currentMoveScore > bestScore) {
+		console.log(currentMoveScore);
+		if (currentMoveScore > bestScore && player === "O") {
 			bestScore = currentMoveScore;
 			bestMove = [i, j];
-		} else {
+		} else if (currentMoveScore < bestScore && player === "X") {
 			bestScore = currentMoveScore;
 			bestMove = [i, j];
 		}
 	});
 	return bestMove;
 }
-
-let scores = {
-	X: -1,
-	O: 1,
-	pareggio: 0,
-};
 
 function minimax(grid, player) {
 	let bestScore;
@@ -154,12 +155,21 @@ function minimax(grid, player) {
 
 	let emptyCells = getEmptyCells(grid);
 
-	if (isGameFinish) {
-		let vincitore = checkWinner(grid, contatore);
+	/*controllare se l'elenco delle celle è vuoto
+	controllare se c'è un vincitore
+	controllare se c'è un pareggio
+	quindi fare la logica di gioco all'interno della funzione minimax
+	*/
+
+	let vincitore = checkWinner(grid);
+
+	//controllo se non c'è un vincitore
+
+	if (vincitore != null) {
 		if (vincitore === "O") {
 			return 1;
 		} else if (vincitore === "X") {
-			return 1;
+			return -1;
 		} else if (vincitore === "pareggio") {
 			return 0;
 		}
@@ -184,7 +194,7 @@ function minimax(grid, player) {
 				score = minimax(grid, "O");
 				grid[i][j] = null;
 			});
-			bestScore = Math.max(bestScore, score);
+			bestScore = Math.min(bestScore, score);
 		}
 	}
 
@@ -209,7 +219,9 @@ for (let i = 0; i < cells.length; i++) {
 			e.currentTarget.classList.contains("player2") ||
 			e.currentTarget.classList.contains("player1");
 
-		if (!cellIsOccupied && !isGameFinish) {
+		let statoPartita = checkWinner(grid);
+
+		if (!cellIsOccupied && statoPartita === null) {
 			v1 = cells[i].dataset.row;
 			v2 = cells[i].dataset.cell;
 
@@ -220,8 +232,8 @@ for (let i = 0; i < cells.length; i++) {
 			playAudio("static/sound/playerX.mp3");
 			grid[v1][v2] = "X";
 
-			count = count + 2;
-			winner = checkWinner(grid, count);
+			
+			winner = checkWinner(grid);
 
 			if (winner === "X") {
 				playAudio("static/sound/win.mp3");
@@ -232,21 +244,25 @@ for (let i = 0; i < cells.length; i++) {
 				output.innerHTML = `pareggio`;
 				output.classList.add("colorOutput");
 			} else {
-				let mossaMigliore = getBestMove(grid, "X");
+				let mossaMigliore = getBestMove(grid, "O");
 				let x = mossaMigliore[0];
 				let y = mossaMigliore[1];
+				console.log("mossa orizzontale " + x);
+				console.log("mossa verticale " + y);
 				let mossaDaEseguire = trovaCella(x, y);
 				cells[mossaDaEseguire].classList.toggle("player2");
 				cells[mossaDaEseguire].classList.add("nes-icon");
 				cells[mossaDaEseguire].classList.add("coin");
 				cells[mossaDaEseguire].classList.add("is-medium");
-				winner = checkWinner(grid, count);
+				winner = checkWinner(grid);
+				grid[x][y] = "O";
 
 				if (winner === "O") {
 					playAudio("static/sound/lose.mp3");
 					output.innerHTML = `hai vinto player O`;
 					output.classList.add("colorOutput");
 				}
+				count = count+2
 			}
 		}
 	});

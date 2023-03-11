@@ -128,10 +128,7 @@ function playAudio(url) {
 	let audio = new Audio(url);
 	setTimeout(() => {
 		console.log("Delayed for 2 second.");
-	}, 2000);
-	audio.play();
-	setTimeout(() => {
-		console.log("Delayed for 2 second.");
+		audio.play();
 	}, 2000);
 }
 
@@ -170,10 +167,14 @@ for (let i = 0; i < cells.length; i++) {
 				let cellRandom = getRandomMove(grid);
 				console.log(cellRandom);
 
-				cells[cellRandom].classList.toggle("player2");
-				cells[cellRandom].classList.add("nes-icon");
-				cells[cellRandom].classList.add("coin");
-				cells[cellRandom].classList.add("is-medium");
+				setTimeout(() => {
+					console.log("ritardo nel visualizzare la mossa del pc");
+					cells[cellRandom].classList.toggle("player2");
+					cells[cellRandom].classList.add("nes-icon");
+					cells[cellRandom].classList.add("coin");
+					cells[cellRandom].classList.add("is-medium");
+				}, 1500);
+
 				winner = checkWinner(grid, count);
 
 				if (winner === "O") {
