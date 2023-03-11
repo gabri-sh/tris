@@ -120,7 +120,7 @@ function getBestMove(grid, player) {
 	emptyCells.forEach(function (element) {
 		//console.log("celle vuote" + element)
 		i = element[0];
-		j = element[j];
+		j = element[1];
 		grid[i][j] = player;
 
 		let currentMoveScore = minimax(grid, player);
