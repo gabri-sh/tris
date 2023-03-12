@@ -4,7 +4,7 @@ let resetBtn = document.querySelector(".resetBtn");
 let output = document.querySelector(".output");
 
 function checkWinner(grid) {
-	let winner;
+	let winner = null;
 	for (let i = 0; i < 3; i++) {
 		if (
 			grid[i][0] != null &&
@@ -45,23 +45,20 @@ function checkWinner(grid) {
 		return winner;
 	}
 
-	//controllo per il pareggio
-
-	let emptyCells = 9;
+	let openSpots = 0;
 	for (let i = 0; i < 3; i++) {
 		for (let j = 0; j < 3; j++) {
-			if (grid[i][j] === "X" || grid[i][j] === "O") {
-				emptyCells--;
+			if (grid[i][j] === null) {
+				openSpots++;
 			}
 		}
 	}
-	if (emptyCells === 0) {
+
+	if (winner === null && openSpots === 0) {
 		return "pareggio";
+	} else {
+		return winner;
 	}
-
-	//nel caso in cui non ha vinto nessuno restituisco null
-
-	return null;
 }
 
 resetBtn.addEventListener("click", (event) => {
@@ -154,16 +151,9 @@ function minimax(grid, player) {
 	}
 
 	let emptyCells = getEmptyCells(grid);
-
-	/*controllare se l'elenco delle celle è vuoto
-	controllare se c'è un vincitore
-	controllare se c'è un pareggio
-	quindi fare la logica di gioco all'interno della funzione minimax
-	*/
-
 	let vincitore = checkWinner(grid);
 
-	//controllo se non c'è un vincitore
+	//controllo il vincitore
 
 	if (vincitore != null) {
 		if (vincitore === "O") {
@@ -178,11 +168,8 @@ function minimax(grid, player) {
 			emptyCells.forEach(function (element) {
 				let i = element[0];
 				let j = element[1];
-
 				grid[i][j] = player;
-
 				score = minimax(grid, "X");
-
 				grid[i][j] = null;
 			});
 			bestScore = Math.max(bestScore, score);
@@ -219,9 +206,9 @@ for (let i = 0; i < cells.length; i++) {
 			e.currentTarget.classList.contains("player2") ||
 			e.currentTarget.classList.contains("player1");
 
-		let statoPartita = checkWinner(grid);
+		winner = checkWinner(grid);
 
-		if (!cellIsOccupied && statoPartita === null) {
+		if (!cellIsOccupied && winner === null) {
 			v1 = cells[i].dataset.row;
 			v2 = cells[i].dataset.cell;
 
@@ -232,14 +219,13 @@ for (let i = 0; i < cells.length; i++) {
 			playAudio("static/sound/playerX.mp3");
 			grid[v1][v2] = "X";
 
-			
 			winner = checkWinner(grid);
 
 			if (winner === "X") {
 				playAudio("static/sound/win.mp3");
 				output.innerHTML = `hai vinto player ${currentPlayer}`;
 				output.classList.add("colorOutput");
-			} else if (count >= 9 && winner === "pareggio") {
+			} else if (winner === "pareggio") {
 				playAudio("static/sound/lose.mp3");
 				output.innerHTML = `pareggio`;
 				output.classList.add("colorOutput");
@@ -247,22 +233,19 @@ for (let i = 0; i < cells.length; i++) {
 				let mossaMigliore = getBestMove(grid, "O");
 				let x = mossaMigliore[0];
 				let y = mossaMigliore[1];
-				console.log("mossa orizzontale " + x);
-				console.log("mossa verticale " + y);
 				let mossaDaEseguire = trovaCella(x, y);
 				cells[mossaDaEseguire].classList.toggle("player2");
 				cells[mossaDaEseguire].classList.add("nes-icon");
 				cells[mossaDaEseguire].classList.add("coin");
 				cells[mossaDaEseguire].classList.add("is-medium");
-				winner = checkWinner(grid);
 				grid[x][y] = "O";
+				winner = checkWinner(grid);
 
 				if (winner === "O") {
 					playAudio("static/sound/lose.mp3");
 					output.innerHTML = `hai vinto player O`;
 					output.classList.add("colorOutput");
 				}
-				count = count+2
 			}
 		}
 	});
