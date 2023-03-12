@@ -173,12 +173,16 @@ for (let i = 0; i < cells.length; i++) {
 					cells[cellRandom].classList.add("nes-icon");
 					cells[cellRandom].classList.add("coin");
 					cells[cellRandom].classList.add("is-medium");
-				}, 1500);
+					playAudio("static/sound/coin.mp3");
+				}, 1000);
 
 				winner = checkWinner(grid, count);
 
 				if (winner === "O") {
-					playAudio("static/sound/lose.mp3");
+					setTimeout(() => {
+						console.log("ulteriore pausa")
+						playAudio("static/sound/lose.mp3");
+					}, 5000);
 					output.innerHTML = `hai vinto player O`;
 					output.classList.add("colorOutput");
 				}
