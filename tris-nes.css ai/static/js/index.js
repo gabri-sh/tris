@@ -111,39 +111,36 @@ function trovaCella(v1, v2) {
 }
 
 function getBestMove(grid, player) {
-	let bestScore;
-	if (player === "X") {
-		bestScore = Infinity;
-	} else if (player === "O") {
-		bestScore = -Infinity;
-	}
+	let bestScore = player === "X" ? Infinity : -Infinity,
+		bestMove = [],
+		empty = getEmptyCells(grid);
 
-	let bestMove = null;
-	let emptyCells = getEmptyCells(grid);
-
-	emptyCells.forEach(function (element) {
-		//console.log("celle vuote" + element)
-		i = element[0];
-		j = element[1];
-		grid[i][j] = player;
-
-		let currentMoveScore = minimax(grid, player);
-		grid[i][j] = null;
-		console.log(currentMoveScore);
-		if (currentMoveScore > bestScore && player === "O") {
-			bestScore = currentMoveScore;
-			bestMove = [i, j];
-		} else if (currentMoveScore < bestScore && player === "X") {
-			bestScore = currentMoveScore;
-			bestMove = [i, j];
+	empty.forEach((emptyCell) => {
+		let i = emptyCell[0];
+		let j = emptyCell[1];
+		grid[i][j] = player === "X" ? "X" : "O";
+		let currentMoveScore = minimax(grid, player === "X" ? "O" : "X");
+		if (player === "X") {
+			// min
+			if (currentMoveScore < bestScore) {
+				bestScore = currentMoveScore;
+				bestMove = [i, j];
+			}
+		} else {
+			if (currentMoveScore > bestScore) {
+				bestScore = currentMoveScore;
+				bestMove = [i, j];
+			}
 		}
+		grid[i][j] = null;
 	});
+	console.log(bestScore)
 	return bestMove;
 }
 
 function minimax(grid, player) {
 	let bestScore;
-	let score;
+
 	if (player === "O") {
 		bestScore = Infinity;
 	} else {
@@ -154,7 +151,6 @@ function minimax(grid, player) {
 	let vincitore = checkWinner(grid);
 
 	//controllo il vincitore
-
 	if (vincitore != null) {
 		if (vincitore === "O") {
 			return 1;
@@ -168,28 +164,27 @@ function minimax(grid, player) {
 			emptyCells.forEach(function (element) {
 				let i = element[0];
 				let j = element[1];
-				grid[i][j] = player;
-				score = minimax(grid, "X");
+				grid[i][j] = "O";
+				let score = minimax(grid, "X");
+				bestScore = Math.max(score, bestScore);
 				grid[i][j] = null;
 			});
-			bestScore = Math.max(bestScore, score);
+			return bestScore;
 		} else {
 			emptyCells.forEach(function (element) {
 				let i = element[0];
 				let j = element[1];
-				grid[i][j] = player;
-				score = minimax(grid, "O");
+				grid[i][j] = "X";
+				let score = minimax(grid, "O");
+				bestScore = Math.min(bestScore, score);
 				grid[i][j] = null;
 			});
-			bestScore = Math.min(bestScore, score);
+			return bestScore;
 		}
 	}
 
 	return bestScore;
 }
-
-let count = 0;
-
 cellIsOccupied = true;
 let v1, v2;
 
@@ -231,14 +226,15 @@ for (let i = 0; i < cells.length; i++) {
 				output.classList.add("colorOutput");
 			} else {
 				let mossaMigliore = getBestMove(grid, "O");
-				let x = mossaMigliore[0];
-				let y = mossaMigliore[1];
-				let mossaDaEseguire = trovaCella(x, y);
+				v1 = mossaMigliore[0];
+				v2 = mossaMigliore[1];
+				grid[v1][v2] = "O";
+				let mossaDaEseguire = trovaCella(v1, v2);
 				cells[mossaDaEseguire].classList.toggle("player2");
 				cells[mossaDaEseguire].classList.add("nes-icon");
 				cells[mossaDaEseguire].classList.add("coin");
 				cells[mossaDaEseguire].classList.add("is-medium");
-				grid[x][y] = "O";
+
 				winner = checkWinner(grid);
 
 				if (winner === "O") {
