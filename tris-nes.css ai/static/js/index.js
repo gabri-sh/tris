@@ -142,9 +142,9 @@ function minimax(grid, player) {
 	let bestScore;
 
 	if (player === "O") {
-		bestScore = Infinity;
-	} else {
 		bestScore = -Infinity;
+	} else {
+		bestScore = Infinity;
 	}
 
 	let emptyCells = getEmptyCells(grid);
