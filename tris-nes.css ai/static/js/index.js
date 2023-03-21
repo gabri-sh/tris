@@ -122,12 +122,12 @@ function getBestMove(grid, player) {
 		let currentMoveScore = minimax(grid, player === "X" ? "O" : "X");
 		if (player === "X") {
 			// min
-			if (currentMoveScore < bestScore) {
+			if (currentMoveScore <= bestScore) {
 				bestScore = currentMoveScore;
 				bestMove = [i, j];
 			}
 		} else {
-			if (currentMoveScore > bestScore) {
+			if (currentMoveScore >= bestScore) {
 				bestScore = currentMoveScore;
 				bestMove = [i, j];
 			}
